@@ -1,0 +1,366 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.4
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 28-05-2020 a las 20:36:04
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.3.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `cagencia`
+--
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `filldates` (`dateStart` DATE, `dateEnd` DATE)  BEGIN
+  WHILE dateStart <= dateEnd DO
+    INSERT INTO tablename (_date) VALUES (dateStart);
+    SET dateStart = date_add(dateStart, INTERVAL 1 DAY);
+  END WHILE;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ano`
+--
+
+CREATE TABLE `ano` (
+  `idAno` int(11) NOT NULL,
+  `Ano_Ano` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `ano`
+--
+
+INSERT INTO `ano` (`idAno`, `Ano_Ano`) VALUES
+(1, '2000'),
+(2, '2001'),
+(3, '2002'),
+(4, '2003'),
+(5, '2004'),
+(6, '2005'),
+(7, '2006'),
+(8, '2007'),
+(9, '2008'),
+(10, '2009'),
+(11, '2010'),
+(12, '2011'),
+(13, '2012'),
+(14, '2013'),
+(15, '2014'),
+(16, '2015'),
+(17, '2016'),
+(18, '2017'),
+(19, '2018'),
+(20, '2019'),
+(21, '2020');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cita`
+--
+
+CREATE TABLE `cita` (
+  `idCita` int(11) NOT NULL,
+  `Taller_idTaller` int(11) NOT NULL,
+  `Servicio_idServicio` int(11) NOT NULL,
+  `Ano_idAno` int(11) NOT NULL,
+  `Modelo_idModelo` int(11) NOT NULL,
+  `Nombre_cliente` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Apellido_cliente` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Cliente_Telefono` varchar(13) COLLATE utf8_spanish_ci NOT NULL,
+  `Cliente_Tel_Tipo` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Cliente_Correo` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Cliente_Auto_Uso` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Cliente_Comentarios` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `Fecha_idFecha` int(11) NOT NULL,
+  `Hora_idHora` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`idCita`, `Taller_idTaller`, `Servicio_idServicio`, `Ano_idAno`, `Modelo_idModelo`, `Nombre_cliente`, `Apellido_cliente`, `Cliente_Telefono`, `Cliente_Tel_Tipo`, `Cliente_Correo`, `Cliente_Auto_Uso`, `Cliente_Comentarios`, `Fecha_idFecha`, `Hora_idHora`) VALUES
+(1, 3, 3, 19, 17, 'Miguel', 'Lopez', '66437847618', 'celular', 'MiguelL@hotmail.com', 'on', '', 2, 2),
+(2, 2, 5, 19, 18, 'Juan', 'Escutia', '6612347611', 'celular', 'JuanE@hotmail.com', '', '', 2, 2),
+(3, 2, 5, 19, 18, 'Lucia', 'Rodriguez', '6648747213', 'celular', 'LuciaR@hotmail.com', '', 'Gracias', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fecha`
+--
+
+CREATE TABLE `fecha` (
+  `idFecha` int(11) NOT NULL,
+  `Fecha_fecha` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `fecha`
+--
+
+INSERT INTO `fecha` (`idFecha`, `Fecha_fecha`) VALUES
+(1, '01-01-2020'),
+(2, '02-01-2020'),
+(3, '03-01-2020');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hora`
+--
+
+CREATE TABLE `hora` (
+  `idHora` int(11) NOT NULL,
+  `Hora_hora` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `hora`
+--
+
+INSERT INTO `hora` (`idHora`, `Hora_hora`) VALUES
+(1, '7:00'),
+(2, '8:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `marca`
+--
+
+CREATE TABLE `marca` (
+  `idMarca` int(11) NOT NULL,
+  `Marca_Nombre` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`idMarca`, `Marca_Nombre`) VALUES
+(1, 'HONDA'),
+(2, 'ACURA');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `modelo`
+--
+
+CREATE TABLE `modelo` (
+  `idModelo` int(11) NOT NULL,
+  `Modelo_Nombre` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Marca_idMarca` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `modelo`
+--
+
+INSERT INTO `modelo` (`idModelo`, `Modelo_Nombre`, `Marca_idMarca`) VALUES
+(1, 'ACORD', 1),
+(2, 'BEAT', 1),
+(3, 'CITY', 1),
+(4, 'CIVIC', 1),
+(5, 'CR-V', 1),
+(6, 'FIT', 1),
+(7, 'HR-V', 1),
+(8, 'INSIGHT', 1),
+(9, 'CR-Z', 1),
+(10, 'INTEGRA', 1),
+(11, 'LEGEND', 1),
+(12, 'LOGO', 1),
+(13, 'PILOT', 1),
+(14, 'ILX', 2),
+(15, 'MDX', 2),
+(16, 'NSX', 2),
+(17, 'RDX', 2),
+(18, 'TLX', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicio`
+--
+
+CREATE TABLE `servicio` (
+  `idServicio` int(11) NOT NULL,
+  `Servicio_Nombre` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `servicio`
+--
+
+INSERT INTO `servicio` (`idServicio`, `Servicio_Nombre`) VALUES
+(1, '5 Mil Km'),
+(2, '10 Mil Km'),
+(3, '15 Mil Km'),
+(4, '20 Mil Km'),
+(5, '25 Mil Km'),
+(6, '30 Mil Km'),
+(7, '35 Mil Km'),
+(8, '40 Mil Km'),
+(9, '45 Mil Km'),
+(10, '50 Mil Km'),
+(11, '55 Mil Km'),
+(12, '60 Mil Km'),
+(13, '65 Mil Km'),
+(14, '70 Mil Km'),
+(15, '75 Mil Km'),
+(16, '80 Mil Km'),
+(17, '85 Mil Km'),
+(18, '90 Mil Km'),
+(19, '95 Mil Km'),
+(20, '100 Mil Km'),
+(21, '120 Mil Km');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `taller`
+--
+
+CREATE TABLE `taller` (
+  `idTaller` int(11) NOT NULL,
+  `Taller_Nombre` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `taller`
+--
+
+INSERT INTO `taller` (`idTaller`, `Taller_Nombre`) VALUES
+(1, 'Ensenada'),
+(2, 'Mexicali'),
+(3, 'Tijuana');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `ano`
+--
+ALTER TABLE `ano`
+  ADD PRIMARY KEY (`idAno`);
+
+--
+-- Indices de la tabla `cita`
+--
+ALTER TABLE `cita`
+  ADD PRIMARY KEY (`idCita`),
+  ADD KEY `fk_Cita_Taller1_idx` (`Taller_idTaller`),
+  ADD KEY `fk_Cita_Servicio1_idx` (`Servicio_idServicio`),
+  ADD KEY `fk_Cita_Ano1_idx` (`Ano_idAno`),
+  ADD KEY `fk_Cita_Modelo1_idx` (`Modelo_idModelo`),
+  ADD KEY `fk_Fecha_Hora_idx` (`Fecha_idFecha`),
+  ADD KEY `Hora_idHora` (`Hora_idHora`);
+
+--
+-- Indices de la tabla `fecha`
+--
+ALTER TABLE `fecha`
+  ADD PRIMARY KEY (`idFecha`);
+
+--
+-- Indices de la tabla `hora`
+--
+ALTER TABLE `hora`
+  ADD PRIMARY KEY (`idHora`),
+  ADD KEY `idHora` (`idHora`);
+
+--
+-- Indices de la tabla `marca`
+--
+ALTER TABLE `marca`
+  ADD PRIMARY KEY (`idMarca`);
+
+--
+-- Indices de la tabla `modelo`
+--
+ALTER TABLE `modelo`
+  ADD PRIMARY KEY (`idModelo`),
+  ADD KEY `fk_Modelo_Marca1_idx` (`Marca_idMarca`);
+
+--
+-- Indices de la tabla `servicio`
+--
+ALTER TABLE `servicio`
+  ADD PRIMARY KEY (`idServicio`);
+
+--
+-- Indices de la tabla `taller`
+--
+ALTER TABLE `taller`
+  ADD PRIMARY KEY (`idTaller`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cita`
+--
+ALTER TABLE `cita`
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `fecha`
+--
+ALTER TABLE `fecha`
+  MODIFY `idFecha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `hora`
+--
+ALTER TABLE `hora`
+  MODIFY `idHora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `cita`
+--
+ALTER TABLE `cita`
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`Fecha_idFecha`) REFERENCES `fecha` (`idFecha`),
+  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`Hora_idHora`) REFERENCES `hora` (`idHora`),
+  ADD CONSTRAINT `fk_Cita_Ano1` FOREIGN KEY (`Ano_idAno`) REFERENCES `ano` (`idAno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Cita_Modelo1` FOREIGN KEY (`Modelo_idModelo`) REFERENCES `modelo` (`idModelo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Cita_Servicio1` FOREIGN KEY (`Servicio_idServicio`) REFERENCES `servicio` (`idServicio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Cita_Taller1` FOREIGN KEY (`Taller_idTaller`) REFERENCES `taller` (`idTaller`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `modelo`
+--
+ALTER TABLE `modelo`
+  ADD CONSTRAINT `fk_Modelo_Marca1` FOREIGN KEY (`Marca_idMarca`) REFERENCES `marca` (`idMarca`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
